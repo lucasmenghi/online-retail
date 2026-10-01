@@ -1,0 +1,29 @@
+{
+  "development_table_sha256": "df4a1bab23d586fa06e6ec2e52f091c3b65f802ccd71782dd314503343abe21d",
+  "serialization": "pandas to_csv(index=False, float_format=%.17g, lineterminator=LF), UTF-8",
+  "rows": 15376,
+  "columns": [
+    "CustomerID",
+    "recency_days",
+    "observed_span_days",
+    "spend_30d",
+    "orders_30d",
+    "products_30d",
+    "units_30d",
+    "ticket_30d",
+    "spend_60d",
+    "orders_60d",
+    "products_60d",
+    "units_60d",
+    "ticket_60d",
+    "spend_90d",
+    "orders_90d",
+    "products_90d",
+    "units_90d",
+    "ticket_90d",
+    "spend_recent_vs_previous_30d",
+    "response_gbp_30d",
+    "reference_date",
+    "response_end"
+  ]
+}

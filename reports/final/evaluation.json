@@ -1,0 +1,21 @@
+{
+  "evaluated_at_utc": "2026-10-01T16:28:21.122781+00:00",
+  "reference_date": "2011-11-01",
+  "response_end_exclusive": "2011-12-01",
+  "customers": 2461,
+  "zero_response_pct": 57.09061357171882,
+  "regressor": "tweedie_log_p1.2_a0.1",
+  "rmse_improvement_pct": -21.55851483269302,
+  "paired_customer_bootstrap": {
+    "resamples": 2000,
+    "seed": 42,
+    "quantity": "regressor_rmse_minus_baseline_rmse_gbp",
+    "ci95_percentile": [
+      11.63500517435548,
+      386.2937164188136
+    ],
+    "limitation": "Condicionado a novembro; não representa incerteza temporal, nem de seleção/treinamento."
+  },
+  "model_changed_after_test": false,
+  "production_approved": false
+}

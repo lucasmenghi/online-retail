@@ -1,35 +1,43 @@
 # Online Retail · previsão de compras em 30 dias
 
-Modelo de regressão para estimar o valor bruto comprado por cliente nos 30 dias seguintes, com histórico de 90 dias e validação temporal. O desenvolvimento segue o CRISP-DM.
+Construção e avaliação de regressão para estimar o valor bruto comprado por cliente nos próximos 30 dias, usando 90 dias de histórico. Desenvolvimento organizado pelo CRISP-DM, da definição do problema à entrega de inferência batch.
 
-**Autoria:** Lucas Menghi desenvolve esta modelagem em um fluxo governado, com assistência de agente de IA e aprovação humana. O agente propõe e implementa análises, explica decisões e executa verificações; Lucas define o escopo, revisa as evidências e aprova as decisões de negócio e a promoção de modelos. Autorizações e pendências estão em [Governança](docs/governance.md). Isso não representa certificação externa nem aprovação produtiva.
+**Autoria:** Lucas Menghi desenvolveu esta modelagem em um fluxo governado, com assistência de agente de IA e autorização humana. O agente implementou, explicou e verificou as alternativas; decisões, autorizações e limites de aprovação estão em [Governança](docs/governance.md). Não há certificação externa nem aprovação de implantação produtiva.
 
-## Estado atual
+## Resultado da versão v1
 
-- Entendimento do negócio e dos dados documentado e executado.
-- Preparação experimental com regras explícitas, análise de sensibilidade e features temporais.
-- Comparação inicial de baselines e regressões em backtests de desenvolvimento.
-- Novembro de 2011 reservado: sem avaliação da variável resposta de teste nesta etapa.
-- Regras finais e modelo para uso operacional ainda pendentes de revisão humana.
+**Construção concluída. O ML não superou a regra histórica no critério principal.** Entre 23 configurações, a regressão Tweedie com transformação logarítmica nas features foi escolhida pelo RMSE de desenvolvimento. Foi congelada antes de avaliar novembro de 2011, sem ajustes posteriores.
 
-## Organização
+| Método — novembro, 2.461 clientes | RMSE (£) | MAE (£) | Viés no total |
+|---|---:|---:|---:|
+| Regressão Tweedie v1 | 1.127,79 | 316,77 | −16,33% |
+| Gasto dos últimos 90 dias / 3 | **927,77** | 326,20 | **−2,12%** |
+
+A regressão piorou RMSE em 21,56%, embora tenha reduzido MAE. A entrega preserva o regressor treinado e recomenda a regra histórica nesta versão. O notebook final explica a decisão, segmentos, incerteza e limitações. Um resultado negativo de comparação não é escondido nem corrigido ajustando o modelo no teste.
+
+## Percurso CRISP-DM
+
+1. [00_discovery.ipynb](00_discovery.ipynb): entendimento do negócio e dos dados.
+2. [01_preparation.ipynb](01_preparation.ipynb): qualidade, sensibilidade e features temporais.
+3. [02_modeling.ipynb](02_modeling.ipynb): baselines e primeira comparação.
+4. [03_final_model.ipynb](03_final_model.ipynb): refinamento, configuração congelada, avaliação final e entrega.
+
+Os três primeiros notebooks preservam o estado histórico de cada etapa. O estado vigente está no quarto notebook e no [model card](docs/model_card.md).
 
 ```text
-00_discovery.ipynb              Entendimento do negócio e dos dados
-01_preparation.ipynb            Qualidade, sensibilidade, features e contrato temporal
-02_modeling.ipynb               Baselines e regressões em desenvolvimento
-src/                           Funções reutilizáveis
-tests/                         Contratos de janelas, população e vazamento
-scripts/                       Conversão e execução dos notebooks
-docs/                          Governança, decisões e model card
-reports/                       Resultados agregados e manifesto da execução
-data/raw/                      Fonte local, não versionada
-data/processed/                Base cliente/referência local, não versionada
+src/                     Features, estimadores, avaliação e inferência
+tests/                   Contratos temporais, numéricos e de serialização
+scripts/                 Execução, refinamento, reconstrução e previsão
+docs/                    Governança, decisões, model card e contrato batch
+reports/final/           Busca, congelamento e resultados finais agregados
+data/raw/                Fonte local, não versionada
+data/processed/          Dados processados locais, não versionados
+artifacts/               Modelo treinado local, não versionado
 ```
 
-## Reproduzir
+## Reproduzir e prever
 
-Ambiente validado: Python 3.11. Consulte [dados e atribuição](data/README.md).
+Python 3.11; versões fixadas em `requirements.txt`. Consulte [dados e atribuição](data/README.md).
 
 ```powershell
 python -m venv .venv
@@ -38,18 +46,21 @@ python -m venv .venv
 .venv\Scripts\python scripts/run_notebooks.py
 ```
 
-Também é possível selecionar a `.venv` como kernel e executar os notebooks em ordem. Nenhum script instala dependências automaticamente ou baixa dados sem uma ação explícita.
+Os notebooks reproduzem análises e leem os relatórios finais congelados; não reabrem automaticamente a busca nem o teste. Com o CSV disponível, reconstrua o artefato conforme a configuração registrada:
 
-## Contrato analítico
+```powershell
+.venv\Scripts\python scripts/rebuild_artifact.py
+.venv\Scripts\python scripts/predict.py --as-of 2011-11-01 --output reports/predictions/november.csv
+```
 
-Cada linha representa cliente × referência mensal. Features usam `[t−90 dias, t)` e a variável resposta usa `[t, t+30 dias)`. Clientes elegíveis sem compra futura recebem zero somente com acompanhamento completo. Transações sem identificação não compõem a população individual.
+Se a reconstrução gerar manifesto local, acrescente `--manifest artifacts/rebuilt_manifest.json`. O CSV de saída identifica separadamente a previsão do regressor e da regra recomendada. Detalhes em [contrato batch](docs/batch_contract.md).
 
-O experimento inicial preserva duplicatas e códigos especiais de transações positivas, conforme a regra inicial do discovery. Variantes avaliam exclusões, sem apresentá-las como aprovadas. A variável resposta representa valor bruto registrado, não receita líquida, lucro ou efeito de campanhas.
+O comando `scripts/finalize_model.py tune` foi usado antes do teste, seguindo o [protocolo](docs/finalization_protocol.md). As proteções impedem sobrescrever a seleção ou reavaliar novembro como se fosse uma nova avaliação independente.
 
-RMSE em £ orienta inicialmente a comparação para valor esperado; MAE, viés e resultados por período complementam a avaliação. Previsões monetárias negativas são truncadas em zero, com a incidência reportada. Valores monetários reais da variável resposta não são truncados.
+## Contrato e limites
 
-## Limitações
+Cada observação é cliente × referência mensal. Features usam `[t−90,t)` e variável resposta `[t,t+30)`. Clientes identificados sem recompra recebem zero com acompanhamento completo. A v1 preserva duplicatas e códigos especiais; soma transações positivas sem deduzir devoluções. Não é previsão de receita líquida nem de toda a loja.
 
-Histórico curto e sazonal, uma única loja, muitos zeros, valores extremos e ausência de horário de disponibilidade dos registros. A validação assume disponibilidade na data do evento; essa hipótese não é comprovada pelo arquivo. Resultados de desenvolvimento não são resultados do teste final.
+Histórico curto, sazonal, com atacadistas e extremos; ausência de horário de ingestão. Um mês de teste não demonstra generalização anual. Novembro já foi consultado e não pode voltar a ser chamado de teste intocado em uma nova rodada de ajustes.
 
-Fonte: Chen, D. (2015). [Online Retail, UCI](https://doi.org/10.24432/C5BW33), CC BY 4.0. A licença da fonte não implica automaticamente uma licença para o código deste repositório.
+Fonte: Chen, D. (2015). [Online Retail, UCI](https://doi.org/10.24432/C5BW33), CC BY 4.0. A licença dos dados não implica automaticamente uma licença para o código.

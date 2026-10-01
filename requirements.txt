@@ -7,3 +7,6 @@ nbformat==5.9.2
 nbclient==0.8.0
 ipykernel==6.28.0
 openpyxl==3.0.10
+joblib==1.2.0
+scipy==1.11.4
+threadpoolctl==2.2.0

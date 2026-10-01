@@ -5,7 +5,7 @@ from nbclient import NotebookClient
 
 if __name__ == "__main__":
     root = Path(__file__).resolve().parents[1]
-    for name in ["00_discovery.ipynb", "01_preparation.ipynb", "02_modeling.ipynb"]:
+    for name in ["00_discovery.ipynb", "01_preparation.ipynb", "02_modeling.ipynb", "03_final_model.ipynb"]:
         path = root / name
         notebook = nbformat.read(path, as_version=4)
         nbformat.validate(notebook)

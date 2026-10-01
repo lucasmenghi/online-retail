@@ -26,3 +26,13 @@ Clientes repetem-se entre referências, pois o uso é prever clientes existentes
 - **HistGradientBoosting:** candidato não linear com complexidade limitada. `early_stopping=False` evita validação interna aleatória; quantidade de iterações fixada. [API 1.2.2](https://scikit-learn.org/1.2/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html).
 
 Nenhuma variante é declarada aprovada apenas por ter erro menor no desenvolvimento.
+
+## Fechamento da versão v1
+
+- **D11 — Definição preservada:** a autorização de finalizar foi aplicada ao escopo bruto existente. Não houve mudança silenciosa para receita líquida nem aprovação comercial inventada.
+- **D12 — Busca limitada:** 23 configurações e cinco folds. Tweedie com log nas features foi o melhor regressor; ainda ficou 0,54% acima do RMSE do baseline no desenvolvimento.
+- **D13 — Congelamento antes do teste:** commit `b723a39`, pipeline e dados identificados por hash. Novembro avaliado depois do congelamento, sem mudança do modelo.
+- **D14 — Não promover ML:** RMSE em novembro 21,56% maior que a regra histórica. A rotina entrega ambos e recomenda a regra em coluna explícita. Menor MAE não substitui o critério pré-declarado.
+- **D15 — Artefato avaliado preservado:** não retreinar com novembro nesta versão. Reconstrução usa parâmetros congelados e verifica equivalência da base de treino; não é nova seleção.
+
+As pendências descritas no experimento inicial são históricas. O estado vigente está no model card e no notebook `03_final_model.ipynb`.
