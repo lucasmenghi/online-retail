@@ -1,5 +1,7 @@
 # Online Retail · previsão de compras em 30 dias
 
+![Online Retail — Previsão de compras em 30 dias com regressão e CRISP-DM](reports/figures/executive-cover.png)
+
 Construção e avaliação de regressão para estimar o valor bruto comprado por cliente nos próximos 30 dias, usando 90 dias de histórico. Desenvolvimento organizado pelo CRISP-DM, da definição do problema à entrega de inferência batch.
 
 **Autoria:** Lucas Menghi desenvolveu esta modelagem em um fluxo governado, com assistência de agente de IA e autorização humana. O agente implementou, explicou e verificou as alternativas; decisões, autorizações e limites de aprovação estão em [Governança](docs/governance.md). Não há certificação externa nem aprovação de implantação produtiva.
