@@ -61,14 +61,14 @@ def candidate_sales(df: pd.DataFrame, *, deduplicate: bool = False,
     return sales
 
 
-def make_snapshot(sales: pd.DataFrame, reference: pd.Timestamp,
-                  observed_start: pd.Timestamp, observed_end: pd.Timestamp) -> pd.DataFrame:
-    """Features em [t-90,t); resposta em [t,t+30); datas sem timezone da fonte."""
+def make_features(sales: pd.DataFrame, reference: pd.Timestamp,
+                  observed_start: pd.Timestamp) -> pd.DataFrame:
+    """Features em [t-90,t), sem exigir compras ou resposta futuras."""
     t = pd.Timestamp(reference)
+    if t.tzinfo is not None or pd.Timestamp(observed_start).tzinfo is not None:
+        raise ValueError("Use datas sem timezone, conforme o relógio da fonte")
     if t - pd.Timedelta(days=90) < observed_start:
         raise ValueError("Histórico de 90 dias incompleto")
-    if t + pd.Timedelta(days=30) > observed_end:
-        raise ValueError("Horizonte da variável resposta incompleto")
     past = sales.loc[sales.InvoiceDate.ge(t - pd.Timedelta(days=90)) & sales.InvoiceDate.lt(t)]
     groups = past.groupby("CustomerID")
     result = pd.DataFrame(index=pd.Index(sorted(past.CustomerID.unique()), name="CustomerID"))
@@ -85,6 +85,18 @@ def make_snapshot(sales: pd.DataFrame, reference: pd.Timestamp,
     result = result.fillna(0)
     # Diferença assinada, sem divisão instável por valores próximos de zero.
     result["spend_recent_vs_previous_30d"] = 2 * result.spend_30d - result.spend_60d
+    if not np.isfinite(result[FEATURES].to_numpy(dtype=float)).all():
+        raise ValueError("Features contêm valores não finitos")
+    return result.reset_index()
+
+
+def make_snapshot(sales: pd.DataFrame, reference: pd.Timestamp,
+                  observed_start: pd.Timestamp, observed_end: pd.Timestamp) -> pd.DataFrame:
+    """Features em [t-90,t); resposta em [t,t+30); datas sem timezone da fonte."""
+    t = pd.Timestamp(reference)
+    if t + pd.Timedelta(days=30) > observed_end:
+        raise ValueError("Horizonte da variável resposta incompleto")
+    result = make_features(sales, t, observed_start).set_index("CustomerID")
     future = sales.loc[sales.InvoiceDate.ge(t) & sales.InvoiceDate.lt(t + pd.Timedelta(days=30))]
     result[RESPONSE] = future.groupby("CustomerID").value_gbp.sum().reindex(result.index, fill_value=0)
     result["reference_date"] = t

@@ -1,0 +1,61 @@
+{
+  "version": "v1",
+  "frozen_at_utc": "2026-10-01T16:27:52.747418+00:00",
+  "selected": {
+    "id": "tweedie_log_p1.2_a0.1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.2,
+    "alpha": 0.1
+  },
+  "selection_metric": "pooled_development_rmse_gbp",
+  "features": [
+    "recency_days",
+    "observed_span_days",
+    "spend_30d",
+    "orders_30d",
+    "products_30d",
+    "units_30d",
+    "ticket_30d",
+    "spend_60d",
+    "orders_60d",
+    "products_60d",
+    "units_60d",
+    "ticket_60d",
+    "spend_90d",
+    "orders_90d",
+    "products_90d",
+    "units_90d",
+    "ticket_90d",
+    "spend_recent_vs_previous_30d"
+  ],
+  "response": "response_gbp_30d",
+  "lookback_days": 90,
+  "horizon_days": 30,
+  "rules": {
+    "deduplicate": false,
+    "merchandise_only": false,
+    "net_of_returns": false
+  },
+  "data_sha256": "7f64af8f3f2e1260f4a97c40ff1c95c8bed3dfeefdacc0367592e68b6a971564",
+  "code_sha256": {
+    "src/retail.py": "88ab3d77f7bffa4f4588b66764c827dc43b5b99d878bfc028cd94ef2ca069dd0",
+    "src/model.py": "1a3d5814c8f8ac92be624ee7cd133836fabc19694f13ed571d97c23a7578b111",
+    "src/evaluation.py": "5d8821be9893092f716edc2f639d8aef341c0f48cd8c6b7e230e5dee4d02f44b",
+    "scripts/finalize_model.py": "120571fefddfd77443e3a44f17cf6dbe406514403e14907f0f4257305cde4ce1"
+  },
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.2.2",
+    "joblib": "1.2.0",
+    "scipy": "1.11.4"
+  },
+  "python": "3.11.7",
+  "train_rows": 15376,
+  "train_last_response_end": "2011-10-31 00:00:00",
+  "test_reference": "2011-11-01",
+  "test_response_end": "2011-12-01",
+  "test_evaluated_at_freeze": false,
+  "production_approved": false
+}

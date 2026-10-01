@@ -1,0 +1,181 @@
+[
+  {
+    "id": "ridge_raw_10",
+    "family": "ridge",
+    "transform": "raw",
+    "alpha": 10
+  },
+  {
+    "id": "ridge_raw_100",
+    "family": "ridge",
+    "transform": "raw",
+    "alpha": 100
+  },
+  {
+    "id": "ridge_raw_1000",
+    "family": "ridge",
+    "transform": "raw",
+    "alpha": 1000
+  },
+  {
+    "id": "ridge_signed_log1p_10",
+    "family": "ridge",
+    "transform": "signed_log1p",
+    "alpha": 10
+  },
+  {
+    "id": "ridge_signed_log1p_100",
+    "family": "ridge",
+    "transform": "signed_log1p",
+    "alpha": 100
+  },
+  {
+    "id": "ridge_signed_log1p_1000",
+    "family": "ridge",
+    "transform": "signed_log1p",
+    "alpha": 1000
+  },
+  {
+    "id": "tweedie_log_p1.2_a0.1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.2,
+    "alpha": 0.1
+  },
+  {
+    "id": "tweedie_log_p1.2_a1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.2,
+    "alpha": 1
+  },
+  {
+    "id": "tweedie_log_p1.2_a10",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.2,
+    "alpha": 10
+  },
+  {
+    "id": "tweedie_log_p1.5_a0.1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.5,
+    "alpha": 0.1
+  },
+  {
+    "id": "tweedie_log_p1.5_a1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.5,
+    "alpha": 1
+  },
+  {
+    "id": "tweedie_log_p1.5_a10",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.5,
+    "alpha": 10
+  },
+  {
+    "id": "tweedie_log_p1.8_a0.1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.8,
+    "alpha": 0.1
+  },
+  {
+    "id": "tweedie_log_p1.8_a1",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.8,
+    "alpha": 1
+  },
+  {
+    "id": "tweedie_log_p1.8_a10",
+    "family": "tweedie",
+    "transform": "signed_log1p",
+    "power": 1.8,
+    "alpha": 10
+  },
+  {
+    "id": "hgb_squared_error_l7_r10",
+    "family": "hgb",
+    "loss": "squared_error",
+    "max_leaf_nodes": 7,
+    "l2_regularization": 10,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_squared_error_l7_r100",
+    "family": "hgb",
+    "loss": "squared_error",
+    "max_leaf_nodes": 7,
+    "l2_regularization": 100,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_squared_error_l15_r10",
+    "family": "hgb",
+    "loss": "squared_error",
+    "max_leaf_nodes": 15,
+    "l2_regularization": 10,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_squared_error_l15_r100",
+    "family": "hgb",
+    "loss": "squared_error",
+    "max_leaf_nodes": 15,
+    "l2_regularization": 100,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_poisson_l7_r10",
+    "family": "hgb",
+    "loss": "poisson",
+    "max_leaf_nodes": 7,
+    "l2_regularization": 10,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_poisson_l7_r100",
+    "family": "hgb",
+    "loss": "poisson",
+    "max_leaf_nodes": 7,
+    "l2_regularization": 100,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_poisson_l15_r10",
+    "family": "hgb",
+    "loss": "poisson",
+    "max_leaf_nodes": 15,
+    "l2_regularization": 10,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  },
+  {
+    "id": "hgb_poisson_l15_r100",
+    "family": "hgb",
+    "loss": "poisson",
+    "max_leaf_nodes": 15,
+    "l2_regularization": 100,
+    "max_iter": 200,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.1
+  }
+]
