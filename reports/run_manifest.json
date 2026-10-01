@@ -1,0 +1,75 @@
+{
+  "executed_at_utc": "2026-10-01T04:07:24.491549+00:00",
+  "data_sha256": "7f64af8f3f2e1260f4a97c40ff1c95c8bed3dfeefdacc0367592e68b6a971564",
+  "python": "3.11.7",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.2.2",
+    "nbformat": "5.9.2",
+    "nbclient": "0.8.0",
+    "matplotlib": "3.8.0"
+  },
+  "features": [
+    "recency_days",
+    "observed_span_days",
+    "spend_30d",
+    "orders_30d",
+    "products_30d",
+    "units_30d",
+    "ticket_30d",
+    "spend_60d",
+    "orders_60d",
+    "products_60d",
+    "units_60d",
+    "ticket_60d",
+    "spend_90d",
+    "orders_90d",
+    "products_90d",
+    "units_90d",
+    "ticket_90d",
+    "spend_recent_vs_previous_30d"
+  ],
+  "response": "response_gbp_30d",
+  "lookback_days": 90,
+  "horizon_days": 30,
+  "rules": {
+    "deduplicate": false,
+    "merchandise_only": false,
+    "net_of_returns": false
+  },
+  "model_parameters": {
+    "ridge": {
+      "alpha": 100
+    },
+    "tweedie": {
+      "power": 1.5,
+      "alpha": 10,
+      "max_iter": 2000
+    },
+    "hist_gradient_boosting": {
+      "max_iter": 150,
+      "max_leaf_nodes": 15,
+      "min_samples_leaf": 30,
+      "l2_regularization": 10,
+      "early_stopping": false,
+      "random_state": 42
+    }
+  },
+  "training_features_scaled": [
+    "ridge",
+    "tweedie"
+  ],
+  "prediction_floor": 0,
+  "validation_references": [
+    "2011-06-01",
+    "2011-07-01",
+    "2011-08-01",
+    "2011-09-01",
+    "2011-10-01"
+  ],
+  "test_reference": "2011-11-01",
+  "test_evaluated": false,
+  "business_rules_final_approval": "pending",
+  "production_approval": "pending"
+}
